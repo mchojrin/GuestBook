@@ -21,9 +21,9 @@ class CommentsRepository
         foreach (json_decode($json, true) as $jsonArray) {
             $comments[] =
                 new Comment(
-                    $jsonArray['Author'],
-                    $jsonArray['Contents'],
-                    new DateTimeImmutable($jsonArray['Date'])
+                    $jsonArray['author'],
+                    $jsonArray['contents'],
+                    (new DateTimeImmutable)->setTimestamp($jsonArray['date'])
                 );
         }
 
@@ -35,6 +35,15 @@ class CommentsRepository
      */
     public function save( array $comments )
     {
-        file_put_contents($this->commentsFile, json_encode($comments));
+        file_put_contents($this->commentsFile, json_encode( array_map(
+            function ( Comment $c ) : array {
+
+                return [
+                    'author' => $c->getAuthor(),
+                    'contents' => $c->getContents(),
+                    'date' => $c->getDate()->getTimestamp(),
+                ];
+            }, $comments
+        )));
     }
 }
