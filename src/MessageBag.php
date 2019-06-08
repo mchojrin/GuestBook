@@ -1,6 +1,6 @@
 <?php
 
-class Translator
+class MessageBag
 {
     private $dictionary;
 
@@ -13,7 +13,7 @@ class Translator
         $this->dictionary = $dictionary;
     }
 
-    public function translate( string $message ) : string
+    public function getMessage(string $message ) : string
     {
         return $this->dictionary[$message];
     }

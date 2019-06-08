@@ -2,15 +2,15 @@
 
 use PHPUnit\Framework\TestCase;
 
-class TranslatorTest extends TestCase
+class MeesageBagTest extends TestCase
 {
     public function testTranslate()
     {
-        $sut = new Translator( [
+        $sut = new MessageBag( [
             'Message1' => 'One',
             'Message2' => 'Two',
         ] );
 
-        $this->assertEquals( 'One', $sut->translate( 'Message1' ) );
+        $this->assertEquals( 'One', $sut->getMessage( 'Message1' ) );
     }
 }
